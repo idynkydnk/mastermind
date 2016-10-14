@@ -1,0 +1,3 @@
+module Mastermind
+  class MainCell
+    
