@@ -2,6 +2,7 @@ require_relative 'cell'
 require_relative 'ui'
 require_relative 'feedback_cell'
 require_relative 'computer'
+require_relative 'player'
 
 
 module Mastermind
@@ -12,6 +13,7 @@ module Mastermind
 		def initialize
       @cells = []
       @feedback_cells = []
+      @guesses = []
       @colors = ["blue", "green", "purple", "red", "yellow", "orange"]
       puts "initialixed!"
 
@@ -22,6 +24,10 @@ module Mastermind
       UI.draw_board(@cells, @feedback_cells)
       Computer.choose_password(@colors)
       puts Computer.password
+      Player.get_guess(@colors)
+      @guesses << Player.guess
+      puts @guesses
+
 
 
     end
