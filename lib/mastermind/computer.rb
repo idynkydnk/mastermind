@@ -33,9 +33,14 @@ module Mastermind
           guess[i] = 0
         end
       end
-      puts guess
-      puts code
-      puts black
+      guess.delete(0)
+      code.delete(0)
+      guess.each do |i|
+        code.delete(code.detect {|x| x == i})
+      end
+      print guess
+      print code
+
     end
     
 
