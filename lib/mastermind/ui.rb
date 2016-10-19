@@ -20,6 +20,10 @@ module Mastermind
       end
     end
 
+    def ask_for_guess
+
+    end
+
     
     
   end

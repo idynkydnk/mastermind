@@ -26,10 +26,11 @@ module Mastermind
       puts Computer.password
       Player.get_guess(@colors)
       @guesses << Player.guess
-      puts @guesses
-
-
-
+      if Computer.check_guess(Player.guess)
+        puts "You got it!"
+      else
+        Computer.get_feedback(Player.guess)
+      end
     end
 
     def set_new_board
