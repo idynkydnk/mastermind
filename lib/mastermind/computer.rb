@@ -24,23 +24,26 @@ module Mastermind
     def self.get_feedback guess
       black = 0
       white = 0
+      player_guess = guess.clone
+      x = player_guess
       code = @@password
       4.times.each do |i|
-        puts i
-        if guess[i] == code[i]
+        if player_guess[i] == code[i]
           black += 1
           code[i] = 0
-          guess[i] = 0
+          player_guess[i] = 0
         end
       end
-      guess.delete(0)
+      player_guess.delete(0)
       code.delete(0)
-      guess.each do |i|
-        code.delete(code.detect {|x| x == i})
+      player_guess.each do |i|
+        if code.detect {|x| x == i}
+          code.delete_at(code.find_index((code.detect {|x| x == i})))
+        end
       end
-      print guess
-      print code
-
+      white = player_guess.length - code.length
+      blank_space = code.length
+      feedback = {black: black, white: white, blank: code.length}
     end
     
 

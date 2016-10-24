@@ -29,7 +29,7 @@ module Mastermind
       if Computer.check_guess(Player.guess)
         puts "You got it!"
       else
-        Computer.get_feedback(Player.guess)
+        update_board(Computer.get_feedback(Player.guess), Player.guess)
       end
     end
 
@@ -38,5 +38,10 @@ module Mastermind
       (1..40).each { |n| @feedback_cells << FeedbackCell.new("_")}
     end
 
+    def update_board feedback, guess
+      puts feedback
+      puts guess
+
+    end
 	end
 end

@@ -2,16 +2,16 @@ module Mastermind
 	class Player
     
 
-    @@guess = []
+    @guess = []
 
     def self.guess
-      @@guess
+      @guess
     end
 
     def self.get_guess colors
       puts "Available colors: " + colors.join(", ")
       print "Guess the code: "
-      @@guess = gets.chomp.split(", ")
+      @guess = gets.chomp.split(", ")
     end
 
     

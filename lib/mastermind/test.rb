@@ -1,7 +1,6 @@
 def get_feedback guess, password
   black = 0
   white = 0
-  guess2 = []
   code = password
   4.times.each do |i|
     if guess[i] == code[i]
@@ -19,15 +18,8 @@ def get_feedback guess, password
   end
   white = guess.length - code.length
   blank_space = code.length
-  print "guess is " + guess.join
-  puts
-  print "code is " + code.join
-  puts
-  puts "white is " + white.to_s
-  puts "black is " + black.to_s
   puts "blank space is " + code.length.to_s
   feedback = {black: black, white: white, blank: code.length}
-  return feedback[:black]
 end
 
 guess = ["green", "purple", "blue", "blue"]
