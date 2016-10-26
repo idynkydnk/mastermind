@@ -2,9 +2,14 @@ module Mastermind
   class Computer
 
     @@password = []
+    @feedback = []
 
     def self.password
       @@password
+    end
+
+    def self.feedback
+      @feedback
     end
 
     def self.choose_password colors
@@ -43,7 +48,8 @@ module Mastermind
       end
       white = player_guess.length - code.length
       blank_space = code.length
-      feedback = {black: black, white: white, blank: code.length}
+      @feedback = {black: black, white: white, blank: code.length}
+
     end
     
 

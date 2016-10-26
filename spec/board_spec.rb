@@ -6,9 +6,18 @@ module Mastermind
 		context "#initialize" do
       it "is initializes a board with 40 cells" do
         board = Board.new
-        expect(board.cells).to eq []
+        expect(board.cells.size).to eq 40
       end
     end
+
+    context "#update_board" do
+      it "updates the board with new cells and feedback" do
+        board = Board.new
+
+
+      end
+    end
+
 
 
 	end
