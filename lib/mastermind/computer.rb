@@ -31,7 +31,7 @@ module Mastermind
       white = 0
       player_guess = guess.clone
       x = player_guess
-      code = @@password
+      code = @@password.clone
       4.times.each do |i|
         if player_guess[i] == code[i]
           black += 1
@@ -49,7 +49,6 @@ module Mastermind
       white = player_guess.length - code.length
       blank_space = code.length
       @feedback = {black: black, white: white, blank: code.length}
-
     end
     
 

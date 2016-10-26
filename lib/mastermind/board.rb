@@ -20,41 +20,40 @@ module Mastermind
     end
 
     def play
-      UI.draw_board(@cells, @feedback_cells)
       Computer.choose_password(@colors)
-      puts Computer.password
-      Player.get_guess(@colors)
-      if Computer.check_guess(Player.guess)
-        puts "You got it!"
-      else
-        update_board(Computer.get_feedback(Player.guess), Player.guess)
+      print Computer.password
+      10.times do |guess_count|
+        UI.draw_board(@cells, @feedback_cells)
+
+        Player.get_guess(@colors)
+        if Computer.check_guess(Player.guess)
+          puts "You got it!"
+        else
+          update_board(Computer.get_feedback(Player.guess), Player.guess, guess_count)
+        end
+      
       end
     end
+
 
     def set_new_board
       (1..40).each { |n| @cells << Cell.new("")}
       (1..40).each { |n| @feedback_cells << FeedbackCell.new("_")}
     end
 
-    def update_board feedback, guess
+    
+    def update_board feedback, guess, guess_count
       feedback_to_display = randomize_feedback(feedback)
       guess_to_display = shorten_colors(guess)
-
-      print feedback_to_display
-      puts
-      print guess_to_display
-
+      x = guess_count * 4
       4.times do |i|
-        @cells[i].color = guess[i]
-        @feedback_cells[i].value = feedback[i]
-        
+        puts i
+        @cells[i+x].color = guess_to_display[i]
+        @feedback_cells[i+x].value = feedback_to_display[i]  
       end
       
       # for i = 0 to 3
       # @cells[i+x].color = guess[x]
-
-
-      # UI.draw_board(@cells, @feedback_cells)
       # add 4 every time this is called
 
     end
