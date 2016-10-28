@@ -6,60 +6,95 @@ require_relative 'player'
 
 
 module Mastermind
+
+  $colors = ["blue", "green", "purple", "red", "yellow", "Orange"]
 	class Board
+      
 
-    attr_reader :cells
 
-		def initialize
+    def initialize
       @cells = []
       @feedback_cells = []
-      @colors = ["blue", "green", "purple", "red", "yellow", "orange"]
-      puts "initialixed!"
-
+      @colors = ["blue", "green", "purple", "red", "yellow", "Orange"]
       set_new_board
     end
 
     def play
-      Computer.choose_password(@colors)
-      print Computer.password
-      10.times do |guess_count|
-        UI.draw_board(@cells, @feedback_cells)
+      if UI.who_is_the_creator == "computer"
+        computer_is_creator_play
+      else
+        player_is_creator_play
+      end
+    end
 
+    
+
+
+
+
+
+
+    def player_is_creator_play
+      feedback = {black: 0, white: 0, blank: 4}
+      code = UI.get_code(@colors)
+      code = code.split(", ")
+      guess = []
+      UI.code_is_set(code)
+      2.times do |guess_count|
+        UI.draw_board(@cells, @feedback_cells)
+        guess = Computer.get_guess(@colors, feedback, guess)
+        UI.computer_guess(guess)
+        feedback = Player.get_feedback
+        if feedback[:black] == 4
+          UI.winner
+        end
+        update_board(feedback, guess, guess_count)
+      end
+
+
+    end
+
+    
+
+
+
+
+
+
+
+
+
+    def computer_is_creator_play
+      Computer.choose_password(@colors)
+      12.times do |guess_count|
+        UI.draw_board(@cells, @feedback_cells)
         Player.get_guess(@colors)
         if Computer.check_guess(Player.guess)
-          puts "You got it!"
+          UI.winner
         else
           update_board(Computer.get_feedback(Player.guess), Player.guess, guess_count)
         end
-      
       end
+      puts "You lose!"
     end
 
 
     def set_new_board
-      (1..40).each { |n| @cells << Cell.new("")}
-      (1..40).each { |n| @feedback_cells << FeedbackCell.new("_")}
+      (1..48).each { |n| @cells << Cell.new("")}
+      (1..48).each { |n| @feedback_cells << FeedbackCell.new("_")}
     end
 
-    
     def update_board feedback, guess, guess_count
       feedback_to_display = randomize_feedback(feedback)
       guess_to_display = shorten_colors(guess)
       x = guess_count * 4
       4.times do |i|
-        puts i
         @cells[i+x].color = guess_to_display[i]
         @feedback_cells[i+x].value = feedback_to_display[i]  
       end
-      
-      # for i = 0 to 3
-      # @cells[i+x].color = guess[x]
-      # add 4 every time this is called
-
     end
 
     def randomize_feedback feedback
-      
       converted_feedback = []
       converted_feedback << "B" * feedback[:black]
       converted_feedback << "W" * feedback[:white]
@@ -67,7 +102,6 @@ module Mastermind
       converted_feedback = converted_feedback.join
       converted_feedback = converted_feedback.split("")
       converted_feedback.shuffle!
-
     end
 
     def shorten_colors guess

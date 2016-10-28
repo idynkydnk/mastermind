@@ -3,6 +3,8 @@ module Mastermind
 
     @@password = []
     @feedback = []
+    @guesses = 0
+    @possible_codes =*(1111..6666)
 
     def self.password
       @@password
@@ -50,15 +52,100 @@ module Mastermind
       blank_space = code.length
       @feedback = {black: black, white: white, blank: code.length}
     end
-    
 
-  private
-
-
-    def black_pegs 
+    def self.get_guess colors, feedback, previous_guess
+      guess = []
+      if previous_guess == []
+        guess << colors[0] << colors[0] << colors[1] << colors[1]
+        return guess
+     end
+     not_possible = not_possible_codes(feedback, previous_guess)
+     remove_impossible_codes(not_possible)
+      @guesses += 1
+      guess
     end
 
-    def white_pegs
+    def self.not_possible_codes(feedback, guess)
+      not_possible = {one: "", two: "", three: "", four: ""}
+      case feedback[:black]
+      when 0
+        not_possible[:one] << guess[0]
+        not_possible[:two] << guess[1]
+        not_possible[:three] << guess[2]
+        not_possible[:four] << guess[3]
+      end 
+      not_possible
+    end
+
+    def self.remove_impossible_codes not_possible
+      impossible_numbers = colors_to_numbers(not_possible)
+      @possible_codes.delete_if {|x| (x / 1000) == impossible_numbers[0] }
+      print @possible_codes
+    end
+
+    def self.colors_to_numbers impossible_colors
+      impossible_numbers = []
+      case impossible_colors[:one]
+      when $colors[0]
+        impossible_numbers << 1
+      when $colors[1]
+        impossible_numbers << 2
+      when $colors[2]
+        impossible_numbers << 3
+      when $colors[3]
+        impossible_numbers << 4
+      when $colors[4]
+        impossible_numbers << 5
+      when $colors[5]
+        impossible_numbers << 6                        
+      end
+      
+      case impossible_colors[:two]
+      when $colors[0]
+        impossible_numbers << 1
+      when $colors[1]
+        impossible_numbers << 2
+      when $colors[2]
+        impossible_numbers << 3
+      when $colors[3]
+        impossible_numbers << 4
+      when $colors[4]
+        impossible_numbers << 5
+      when $colors[5]
+        impossible_numbers << 6                        
+      end
+
+      case impossible_colors[:three]
+      when $colors[0]
+        impossible_numbers << 1
+      when $colors[1]
+        impossible_numbers << 2
+      when $colors[2]
+        impossible_numbers << 3
+      when $colors[3]
+        impossible_numbers << 4
+      when $colors[4]
+        impossible_numbers << 5
+      when $colors[5]
+        impossible_numbers << 6                        
+      end
+
+      case impossible_colors[:four]
+      when $colors[0]
+        impossible_numbers << 1
+      when $colors[1]
+        impossible_numbers << 2
+      when $colors[2]
+        impossible_numbers << 3
+      when $colors[3]
+        impossible_numbers << 4
+      when $colors[4]
+        impossible_numbers << 5
+      when $colors[5]
+        impossible_numbers << 6                        
+      end
+      impossible_numbers
+
     end
 
     
