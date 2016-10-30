@@ -4,7 +4,7 @@ module Mastermind
     @@password = []
     @feedback = []
     @guesses = 0
-    @possible_codes =*(1111..6666)
+    @possible_codes =*("0000".."5555")
 
     def self.password
       @@password
@@ -61,8 +61,74 @@ module Mastermind
      end
      not_possible = not_possible_codes(feedback, previous_guess)
      remove_impossible_codes(not_possible)
+     number_guess = @possible_codes[0]
+     convert_numbers_to_colors(number_guess)
       @guesses += 1
       guess
+    end
+
+    def self.convert_numbers_to_colors number_guess
+      guess = []
+      case number_guess[0]
+      when "0"
+        guess << $colors[0]
+      when "1"
+        guess << $colors[1]
+      when "2"
+        guess << $colors[2]
+      when "3"
+        guess << $colors[3]
+      when "4"
+        guess << $colors[4]
+      when "5"
+        guess << $colors[5]      
+      end
+
+      case number_guess[1]
+      when "0"
+        guess << $colors[0]
+      when "1"
+        guess << $colors[1]
+      when "2"
+        guess << $colors[2]
+      when "3"
+        guess << $colors[3]
+      when "4"
+        guess << $colors[4]
+      when "5"
+        guess << $colors[5]      
+      end
+
+      case number_guess[2]
+      when "0"
+        guess << $colors[0]
+      when "1"
+        guess << $colors[1]
+      when "2"
+        guess << $colors[2]
+      when "3"
+        guess << $colors[3]
+      when "4"
+        guess << $colors[4]
+      when "5"
+        guess << $colors[5]      
+      end
+
+      case number_guess[3]
+      when "0"
+        guess << $colors[0]
+      when "1"
+        guess << $colors[1]
+      when "2"
+        guess << $colors[2]
+      when "3"
+        guess << $colors[3]
+      when "4"
+        guess << $colors[4]
+      when "5"
+        guess << $colors[5]      
+      end
+      print guess
     end
 
     def self.not_possible_codes(feedback, guess)
@@ -79,70 +145,72 @@ module Mastermind
 
     def self.remove_impossible_codes not_possible
       impossible_numbers = colors_to_numbers(not_possible)
-      @possible_codes.delete_if {|x| (x / 1000) == impossible_numbers[0] }
-      print @possible_codes
+      @possible_codes.delete_if {|x| x[0].to_i == impossible_numbers[0] }
+      @possible_codes.delete_if {|x| x[1].to_i == impossible_numbers[1] }
+      @possible_codes.delete_if {|x| x[2].to_i == impossible_numbers[2] }
+      @possible_codes.delete_if {|x| x[3].to_i == impossible_numbers[3] }
     end
 
     def self.colors_to_numbers impossible_colors
       impossible_numbers = []
       case impossible_colors[:one]
       when $colors[0]
-        impossible_numbers << 1
+        impossible_numbers << 0
       when $colors[1]
-        impossible_numbers << 2
+        impossible_numbers << 1
       when $colors[2]
-        impossible_numbers << 3
+        impossible_numbers << 2
       when $colors[3]
-        impossible_numbers << 4
+        impossible_numbers << 3
       when $colors[4]
-        impossible_numbers << 5
+        impossible_numbers << 4
       when $colors[5]
-        impossible_numbers << 6                        
+        impossible_numbers << 5                        
       end
       
       case impossible_colors[:two]
       when $colors[0]
-        impossible_numbers << 1
+        impossible_numbers << 0
       when $colors[1]
-        impossible_numbers << 2
+        impossible_numbers << 1
       when $colors[2]
-        impossible_numbers << 3
+        impossible_numbers << 2
       when $colors[3]
-        impossible_numbers << 4
+        impossible_numbers << 3
       when $colors[4]
-        impossible_numbers << 5
+        impossible_numbers << 4
       when $colors[5]
-        impossible_numbers << 6                        
+        impossible_numbers << 5                        
       end
 
       case impossible_colors[:three]
       when $colors[0]
-        impossible_numbers << 1
+        impossible_numbers << 0
       when $colors[1]
-        impossible_numbers << 2
+        impossible_numbers << 1
       when $colors[2]
-        impossible_numbers << 3
+        impossible_numbers << 2
       when $colors[3]
-        impossible_numbers << 4
+        impossible_numbers << 3
       when $colors[4]
-        impossible_numbers << 5
+        impossible_numbers << 4
       when $colors[5]
-        impossible_numbers << 6                        
+        impossible_numbers << 5                        
       end
 
       case impossible_colors[:four]
       when $colors[0]
-        impossible_numbers << 1
+        impossible_numbers << 0
       when $colors[1]
-        impossible_numbers << 2
+        impossible_numbers << 1
       when $colors[2]
-        impossible_numbers << 3
+        impossible_numbers << 2
       when $colors[3]
-        impossible_numbers << 4
+        impossible_numbers << 3
       when $colors[4]
-        impossible_numbers << 5
+        impossible_numbers << 4
       when $colors[5]
-        impossible_numbers << 6                        
+        impossible_numbers << 5                        
       end
       impossible_numbers
 
