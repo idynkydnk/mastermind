@@ -53,82 +53,40 @@ module Mastermind
       @feedback = {black: black, white: white, blank: code.length}
     end
 
-    def self.get_guess colors, feedback, previous_guess
+    def self.get_guess feedback, previous_guess
       guess = []
       if previous_guess == []
-        guess << colors[0] << colors[0] << colors[1] << colors[1]
+        guess << $colors[0] << $colors[0] << $colors[1] << $colors[1]
         return guess
-     end
-     not_possible = not_possible_codes(feedback, previous_guess)
-     remove_impossible_codes(not_possible)
-     number_guess = @possible_codes[0]
-     convert_numbers_to_colors(number_guess)
+      end
+      not_possible = not_possible_codes(feedback, previous_guess)
+      remove_impossible_codes(not_possible)
+      number_guess = @possible_codes[0]
+      guess = convert_numbers_to_colors(number_guess)
       @guesses += 1
       guess
     end
 
     def self.convert_numbers_to_colors number_guess
       guess = []
-      case number_guess[0]
-      when "0"
-        guess << $colors[0]
-      when "1"
-        guess << $colors[1]
-      when "2"
-        guess << $colors[2]
-      when "3"
-        guess << $colors[3]
-      when "4"
-        guess << $colors[4]
-      when "5"
-        guess << $colors[5]      
-      end
 
-      case number_guess[1]
-      when "0"
-        guess << $colors[0]
-      when "1"
-        guess << $colors[1]
-      when "2"
-        guess << $colors[2]
-      when "3"
-        guess << $colors[3]
-      when "4"
-        guess << $colors[4]
-      when "5"
-        guess << $colors[5]      
+      (0..3).each do |x|
+        case number_guess[x]
+        when "0"
+          guess << $colors[0]
+        when "1"
+          guess << $colors[1]
+        when "2"
+          guess << $colors[2]
+        when "3"
+          guess << $colors[3]
+        when "4"
+          guess << $colors[4]
+        when "5"
+          guess << $colors[5]      
+        end
       end
-
-      case number_guess[2]
-      when "0"
-        guess << $colors[0]
-      when "1"
-        guess << $colors[1]
-      when "2"
-        guess << $colors[2]
-      when "3"
-        guess << $colors[3]
-      when "4"
-        guess << $colors[4]
-      when "5"
-        guess << $colors[5]      
-      end
-
-      case number_guess[3]
-      when "0"
-        guess << $colors[0]
-      when "1"
-        guess << $colors[1]
-      when "2"
-        guess << $colors[2]
-      when "3"
-        guess << $colors[3]
-      when "4"
-        guess << $colors[4]
-      when "5"
-        guess << $colors[5]      
-      end
-      print guess
+      guess
     end
 
     def self.not_possible_codes(feedback, guess)
@@ -139,7 +97,9 @@ module Mastermind
         not_possible[:two] << guess[1]
         not_possible[:three] << guess[2]
         not_possible[:four] << guess[3]
-      end 
+      end
+      # go through available codes one by one and see if they reuturn the same feedback
+
       not_possible
     end
 
@@ -153,67 +113,24 @@ module Mastermind
 
     def self.colors_to_numbers impossible_colors
       impossible_numbers = []
-      case impossible_colors[:one]
-      when $colors[0]
-        impossible_numbers << 0
-      when $colors[1]
-        impossible_numbers << 1
-      when $colors[2]
-        impossible_numbers << 2
-      when $colors[3]
-        impossible_numbers << 3
-      when $colors[4]
-        impossible_numbers << 4
-      when $colors[5]
-        impossible_numbers << 5                        
-      end
-      
-      case impossible_colors[:two]
-      when $colors[0]
-        impossible_numbers << 0
-      when $colors[1]
-        impossible_numbers << 1
-      when $colors[2]
-        impossible_numbers << 2
-      when $colors[3]
-        impossible_numbers << 3
-      when $colors[4]
-        impossible_numbers << 4
-      when $colors[5]
-        impossible_numbers << 5                        
-      end
-
-      case impossible_colors[:three]
-      when $colors[0]
-        impossible_numbers << 0
-      when $colors[1]
-        impossible_numbers << 1
-      when $colors[2]
-        impossible_numbers << 2
-      when $colors[3]
-        impossible_numbers << 3
-      when $colors[4]
-        impossible_numbers << 4
-      when $colors[5]
-        impossible_numbers << 5                        
-      end
-
-      case impossible_colors[:four]
-      when $colors[0]
-        impossible_numbers << 0
-      when $colors[1]
-        impossible_numbers << 1
-      when $colors[2]
-        impossible_numbers << 2
-      when $colors[3]
-        impossible_numbers << 3
-      when $colors[4]
-        impossible_numbers << 4
-      when $colors[5]
-        impossible_numbers << 5                        
+      i = [:one, :two, :three, :four]
+      i.each do |x|
+        case impossible_colors[x]
+        when $colors[0]
+          impossible_numbers << 0
+        when $colors[1]
+          impossible_numbers << 1
+        when $colors[2]
+          impossible_numbers << 2
+        when $colors[3]
+          impossible_numbers << 3
+        when $colors[4]
+          impossible_numbers << 4
+        when $colors[5]
+          impossible_numbers << 5                        
+        end
       end
       impossible_numbers
-
     end
 
     

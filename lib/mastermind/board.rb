@@ -42,7 +42,7 @@ module Mastermind
       UI.code_is_set(code)
       2.times do |guess_count|
         UI.draw_board(@cells, @feedback_cells)
-        guess = Computer.get_guess(@colors, feedback, guess)
+        guess = Computer.get_guess(feedback, guess)
         UI.computer_guess(guess)
         feedback = Player.get_feedback
         if feedback[:black] == 4
